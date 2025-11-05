@@ -1,9 +1,9 @@
-// src/components/EnhancedHeader.js
+// src/components/EnhancedHeader.js - UPDATED
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Recycle, Leaf, Zap, Earth } from 'lucide-react';
+import { Recycle, Leaf, Zap, Earth, Menu } from 'lucide-react';
 
-const EnhancedHeader = () => {
+const EnhancedHeader = ({ isMobile, isTablet, onMobileMenuToggle }) => {
   const [currentTip, setCurrentTip] = useState(0);
   
   const ecoTips = [
@@ -22,7 +22,7 @@ const EnhancedHeader = () => {
 
   return (
     <motion.header 
-      className="enhanced-header"
+      className={`enhanced-header ${isMobile ? 'mobile-header' : ''} ${isTablet ? 'tablet-header' : ''}`}
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ type: "spring", stiffness: 100 }}
@@ -34,12 +34,20 @@ const EnhancedHeader = () => {
       
       <div className="creative-container">
         <motion.div 
-          className="header-main"
+          className={`header-main ${isMobile ? 'mobile-header-main' : ''}`}
           initial={{ scale: 0.8 }}
           animate={{ scale: 1 }}
           transition={{ delay: 0.2 }}
         >
           <div className="logo-container">
+            {isMobile && (
+              <button 
+                className="mobile-menu-btn"
+                onClick={onMobileMenuToggle}
+              >
+                <Menu size={24} />
+              </button>
+            )}
             <motion.div 
               className="logo-orb"
               animate={{ 
@@ -54,49 +62,53 @@ const EnhancedHeader = () => {
               <Recycle className="logo-icon" />
             </motion.div>
             <div className="logo-text">
-              <h1>EcoClassify</h1>
-              <p>AI Material Recognition</p>
+              <h1 className={isMobile ? 'mobile-logo' : ''}>EcoClassify</h1>
+              {!isMobile && <p>AI Material Recognition</p>}
             </div>
           </div>
 
-          <motion.div 
-            className="eco-stats"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.5 }}
-          >
-            <div className="stat-item">
-              <Zap size={20} />
-              <span>Fast Analysis</span>
-            </div>
-            <div className="stat-item">
-              <Leaf size={20} />
-              <span>Eco-Friendly</span>
-            </div>
-            <div className="stat-item">
-              <Earth size={20} />
-              <span>Planet Positive</span>
-            </div>
-          </motion.div>
+          {!isMobile && (
+            <motion.div 
+              className={`eco-stats ${isTablet ? 'tablet-stats' : ''}`}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5 }}
+            >
+              <div className="stat-item">
+                <Zap size={20} />
+                <span>Fast Analysis</span>
+              </div>
+              <div className="stat-item">
+                <Leaf size={20} />
+                <span>Eco-Friendly</span>
+              </div>
+              <div className="stat-item">
+                <Earth size={20} />
+                <span>Planet Positive</span>
+              </div>
+            </motion.div>
+          )}
         </motion.div>
 
-        <motion.div 
-          className="eco-tips-carousel"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.7 }}
-        >
-          <div className="tip-icon">💡</div>
-          <motion.p
-            key={currentTip}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.5 }}
+        {!isMobile && (
+          <motion.div 
+            className="eco-tips-carousel"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
           >
-            {ecoTips[currentTip]}
-          </motion.p>
-        </motion.div>
+            <div className="tip-icon">💡</div>
+            <motion.p
+              key={currentTip}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.5 }}
+            >
+              {ecoTips[currentTip]}
+            </motion.p>
+          </motion.div>
+        )}
       </div>
     </motion.header>
   );

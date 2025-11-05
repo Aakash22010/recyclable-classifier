@@ -711,3 +711,132 @@
   margin: 0 auto;
   padding: 0 20px;
 }
+
+/* Add to src/styles/CreativeApp.css */
+
+/* Smooth upload progress bar */
+.upload-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  transform-origin: left;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--eco-green), var(--eco-blue));
+  transform-origin: left;
+  border-radius: 0 2px 2px 0;
+}
+
+/* Enhanced magnetic button effects */
+.magnetic-button {
+  position: relative;
+  overflow: hidden;
+}
+
+.magnetic-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s ease, height 0.6s ease;
+  border-radius: 50%;
+}
+
+.magnetic-button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Smooth image loading */
+.preview-image {
+  transition: transform 0.3s ease;
+}
+
+.preview-image:hover {
+  transform: scale(1.02);
+}
+
+/* Enhanced focus states for accessibility */
+.creative-tab:focus,
+.btn-primary:focus,
+.btn-secondary:focus,
+.feedback-btn:focus {
+  outline: 2px solid var(--eco-green);
+  outline-offset: 2px;
+}
+
+/* Smooth backdrop blur transitions */
+.creative-input-section,
+.creative-results-section {
+  backdrop-filter: blur(20px);
+  transition: backdrop-filter 0.3s ease;
+}
+
+/* Reduced motion adjustments */
+@media (prefers-reduced-motion: reduce) {
+  .enhanced-hover,
+  .magnetic-button,
+  .creative-tab,
+  .material-card {
+    transition: none !important;
+    transform: none !important;
+  }
+  
+  .floating-materials,
+  .scan-line,
+  .loading-orb {
+    animation: none !important;
+  }
+}
+
+/* Performance optimizations */
+.smooth-transform {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Will-change for elements that will animate */
+.creative-tab,
+.material-card,
+.upload-zone,
+.capture-button-creative {
+  will-change: transform, opacity;
+}
+
+/* Optimized image rendering */
+.preview-image,
+.captured-image-creative,
+.result-image-preview-creative img {
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Smooth color transitions */
+.creative-tab,
+.btn-primary,
+.btn-secondary,
+.feedback-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced loading states */
+.loading-animation-container {
+  transform: translateZ(0);
+}
+
+/* Smooth gradient animations */
+.header-background,
+.upload-glow,
+.tab-glow {
+  animation: gradientShift 8s ease infinite;
+}
